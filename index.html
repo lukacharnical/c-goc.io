@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>🧠 Messages Codés</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+.box {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 15px;
+    max-width: 600px;
+}
+
+input, select, button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+}
+
+button {
+    background: #00ffcc;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffcc00;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🧠 Messages Codés</h1>
+<p>Encode ou décode tes messages secrets 🔐</p>
+
+<div class="box">
+    <h2>✍️ Ton message</h2>
+    <input type="text" id="message" placeholder="Entre ton message ici">
+</div>
+
+<div class="box">
+    <h2>🔧 Choix du code</h2>
+    <select id="method">
+        <option value="rot13">ROT13 (miroir)</option>
+        <option value="reverse">Inversé</option>
+        <option value="ascii">ASCII</option>
+    </select>
+    <br>
+    <button onclick="encode()">Encoder / Décoder</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+function rot13(str) {
+    return str.replace(/[a-zA-Z]/g, function(c){
+        return String.fromCharCode(
+            (c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26
+        );
+    });
+}
+
+function reverse(str) {
+    return str.split("").reverse().join("");
+}
+
+function ascii(str) {
+    return str.split("").map(c => c.charCodeAt(0)).join(" ");
+}
+
+function encode() {
+    let msg = document.getElementById("message").value;
+    let method = document.getElementById("method").value;
+    let result = "";
+
+    if(method === "rot13") result = rot13(msg);
+    if(method === "reverse") result = reverse(msg);
+    if(method === "ascii") result = ascii(msg);
+
+    document.getElementById("output").textContent = result;
+}
+</script>
+
+</body>
+
+</html>
